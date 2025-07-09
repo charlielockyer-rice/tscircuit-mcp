@@ -1,6 +1,9 @@
 import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import TscircuitAPI from './tscircuit-api.js';
 import { ComponentCategory } from './types.js';
 
@@ -20,6 +23,30 @@ export class TscircuitMCPServer {
 
   private setupHandlers(): void {
     // Register resources
+    this.server.resource(
+      'ai-context',
+      'tscircuit://ai-context',
+      { description: 'AI context for working with tscircuit - comprehensive documentation and usage patterns' },
+      async (uri: URL) => {
+        try {
+          const __filename = fileURLToPath(import.meta.url);
+          const __dirname = dirname(__filename);
+          const aiContextPath = join(__dirname, '..', 'docs', 'ai.txt');
+          const aiContext = readFileSync(aiContextPath, 'utf8');
+          
+          return {
+            contents: [{
+              uri: uri.toString(),
+              mimeType: 'text/plain',
+              text: aiContext,
+            }],
+          };
+        } catch (error) {
+          throw new Error(`Failed to load AI context: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        }
+      }
+    );
+
     this.server.resource(
       'search',
       'tscircuit://packages/search',
