@@ -1,0 +1,36 @@
+{
+  "name": "tscircuit-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for tscircuit electronics component registry",
+  "main": "build/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "bun run build/index.js",
+    "dev": "bun run --watch src/index.ts",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["mcp", "tscircuit", "electronics", "components", "model-context-protocol", "claude", "ai"],
+  "author": "Charlie Lockyer",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.15.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "bun": ">=1.0.0",
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charlielockyer/tscircuit-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/charlielockyer/tscircuit-mcp/issues"
+  },
+  "homepage": "https://github.com/charlielockyer/tscircuit-mcp#readme"
+}
